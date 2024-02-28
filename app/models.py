@@ -15,6 +15,8 @@ class Medico(db.Model):
     registro_medico = db.Column(db.Integer)
     especialidad = db.Column(db.String(50))
 
+    citas = db.relationship("Cita" , backref = "medico" )
+
 
 class Paciente(db.Model):
     
@@ -36,7 +38,7 @@ class Consultorio(db.Model):
 class Cita(db.Model):
     __tablename__= "citas"
     id = db.Column(db.Integer, primary_key = True)
-    fecha = db.Column(db.Datetime, default = datetime.utcnow)
+    fecha = db.Column(db.DateTime, default = datetime.utcnow)
     paciente_id = db.Column(db.Integer, db.ForeignKey("pacientes.id"))
     medico_id = db.Column(db.Integer, db.ForeignKey("medicos.id"))
     consultorio_id = db.Column(db.Integer, db.ForeignKey("consultorio.id"))
