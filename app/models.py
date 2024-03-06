@@ -46,9 +46,4 @@ class Cita(db.Model):
     medico_id = db.Column(db.Integer, db.ForeignKey("medicos.id"))
     consultorio_id = db.Column(db.Integer, db.ForeignKey("consultorio.id"))
     valor = db.Column(db.Integer)
-    
-
-
-    
-    
-      
+         
