@@ -13,6 +13,7 @@
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
+                <th>ver detalles</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,15 @@
                 <tr>
                     <td>{{ paciente.nombre }}</td>
                     <td>{{ paciente.apellido }}</td>
+                    <td>{{ paciente.tipo_identificacion}}</td>
+                    <td>{{ paciente.numero_identificacion }}</td>
+                    <td>{{ paciente.altura }}</td>
+                    <td>{{ paciente.tipo_sangre }}</td>
+                    <td>
+                        <a href="/pacientes/{{ paciente.id }}">
+                            ver detalles
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

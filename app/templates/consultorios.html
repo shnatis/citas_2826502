@@ -12,12 +12,18 @@
         <thead>
             <tr>
                 <th>Numero</th>
+                <th>ver detalles</th>
             </tr>
         </thead>
         <tbody>
             {% for consultorio in consultorios %}
                 <tr>
                     <td>{{ consultorio.numero }}</td>
+                    <td>
+                        <a href="/consultorios/{{ consultorio.id }}">
+                            ver detalles
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
