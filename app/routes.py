@@ -1,6 +1,6 @@
 from . import app, db
 from .models import *
-from flask import render_template, request
+from flask import render_template, request, flash, redirect 
 
 
 #crear ruta para ver los medicos 
@@ -37,20 +37,20 @@ def get_paciente_by_id(id):
 #crear ruta para crear nuevo medico
 @app.route("/medicos/create" , methods = [ 'GET' , 'POST'] )
 def create_medico():
-    #######
-    #### mostrar el formulario: metodo GET 
-    #######
     if( request.method == 'GET' ):
         especialidades = [
             "Cardiologia",
             "Pediatria", 
             "Oncologia"
         ]
-        return render_template("medico_form.html",
-                                especialidades = especialidades )
+    medico_update = Medico.query.get(id)
+    if(request.method == "GET"):  
+        return render_template('medico_update.html',
+                            medico_update = medico_update,
+                            especialidades = especialidades)
     
     ####
-    ## Cuando el usuario presiona el boton guardar 
+    ## Cuando el usuario presiona el boton guardar  
     ## los datos del formulario viajan al servidor
     ## utilizando el metodo POST
 
@@ -63,6 +63,38 @@ def create_medico():
                             registro_medico = request.form["rm"],
                             especialidad = request.form["es"]
                             )
+        
         db.session.add(new_medico)
         db.session.commit()
-        return "medico registrado" 
+        flash("Medico registrado correctamente")
+        return redirect("/medicos")
+    
+@app.route("/medicos/update/<int:id>", methods= ["POST" , "GET"])
+def update_medico(id):
+    especialidades = [
+            "Cardiologia" ,
+            "Pediatria" ,
+            "Oncologia"
+
+        ]
+    medico_update = Medico.query.get(id)
+    if(request.method == "GET"):
+        return render_template("medico_update.html" ,
+                           medico_update = medico_update ,
+                           especialidades = especialidades)
+    elif(request.method == "POST"):
+        medico_update.nombre = request.form["nombre"]
+        medico_update.apellidos = request.form["apellidos"]
+        medico_update.tipo_identificacion = request.form["ti"]
+        medico_update.numero_identificacion = request.form["ni"]
+        medico_update.registro_medico = request.form["rm"]
+        medico_update.especialiad = request.form["es"]
+        db.session.commit()
+        return "medico actualizado"
+    
+@app.route("/medicos/delete/<int:id>")
+def delete_medico(id):
+    medico_delete = Medico.query.get(id)
+    db.session.delete(medico_delete)
+    db.session.commit()
+    return redirect("/medicos")

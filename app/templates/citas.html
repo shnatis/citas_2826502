@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <select name="medicos" >
+        {% for medico in medicos %}
+            <option value="{{ medico.id }}">
+                {{ medico.nombre }}
+            </option>
+        {% endfor %}    
+    </select>
+    <input type="datetime"
+</body>
+</html>
